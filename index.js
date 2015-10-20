@@ -30,6 +30,8 @@ exports = module.exports = function(urlOrOpts, callback) {
 	return preq.get(urlOrOpts
 	).then(function(response) {
 		return index.parseAll(cheerio.load(response.body));
+	}).catch(function(e) {
+		callback(e);
 	}).nodeify(callback);
 };
 
