@@ -31,7 +31,9 @@ exports = module.exports = function(urlOrOpts, callback) {
       if (err || response.statusCode != 200) {
         return callback(err ? err : new Error('Unable to scrape meta data'));
       }
-      index.parseAll(cheerio.load(response.body)).then(callback);
+      index.parseAll(cheerio.load(response.body)).then(function(meta) {
+        callback(err, meta);
+      });
     });
   } catch(err) { callback(err); }
 };
