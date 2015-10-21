@@ -35,7 +35,7 @@ exports = module.exports = function(urlOrOpts, callback) {
         callback(null, meta);
       }).catch(function(err) {
         callback(err);
-      });;
+      });
     });
   } catch(err) { callback(err); }
 };
