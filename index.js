@@ -13,7 +13,7 @@ Import modules
  */
 var BBPromise = require('bluebird');
 var cheerio = require('cheerio');
-var require = require('request');
+var request = require('request');
 var index = require('./lib/index.js');
 
 /**
