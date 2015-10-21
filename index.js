@@ -33,7 +33,9 @@ exports = module.exports = function(urlOrOpts, callback) {
       }
       index.parseAll(cheerio.load(response.body)).then(function(meta) {
         callback(null, meta);
-      });
+      }).catch(function(err) {
+        callback(err);
+      });;
     });
   } catch(err) { callback(err); }
 };
