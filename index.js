@@ -13,8 +13,7 @@ Import modules
  */
 var BBPromise = require('bluebird');
 var cheerio = require('cheerio');
-var preq = require('preq'); // Promisified Request library
-
+var require = require('request');
 var index = require('./lib/index.js');
 
 /**
@@ -27,12 +26,14 @@ var index = require('./lib/index.js');
  * @return {Object}              BBPromise for metadata
  */
 exports = module.exports = function(urlOrOpts, callback) {
-	return preq.get(urlOrOpts
-	).then(function(response) {
-		return index.parseAll(cheerio.load(response.body));
-	}).catch(function(e) {
-		callback(e);
-	}).nodeify(callback);
+  try {
+    request.get(urlOrOpts, function(err, response, body) {
+      if (err || response.statusCode != 200) {
+        return callback(err ? err : new Error('Unable to scrape meta data'));
+      }
+      index.parseAll(cheerio.load(response.body)).then(callback);
+    });
+  } catch(err) { callback(err); }
 };
 
 /**
